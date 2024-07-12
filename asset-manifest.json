@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/snakeKopa/static/css/main.2521e1ee.css",
+    "main.js": "/snakeKopa/static/js/main.1c1a5ae2.js",
+    "static/js/453.85a8f6a6.chunk.js": "/snakeKopa/static/js/453.85a8f6a6.chunk.js",
+    "index.html": "/snakeKopa/index.html",
+    "main.2521e1ee.css.map": "/snakeKopa/static/css/main.2521e1ee.css.map",
+    "main.1c1a5ae2.js.map": "/snakeKopa/static/js/main.1c1a5ae2.js.map",
+    "453.85a8f6a6.chunk.js.map": "/snakeKopa/static/js/453.85a8f6a6.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2521e1ee.css",
+    "static/js/main.1c1a5ae2.js"
+  ]
+}
