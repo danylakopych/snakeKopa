@@ -1,0 +1,69 @@
+.wrapper { 
+	position: relative; 
+	width: 500px;
+	/* border-radius: 10px; */
+	margin: 50px auto; 
+	margin-top: 20px; 
+	display: flex; 
+	flex-wrap: wrap; 
+	justify-content: center; 
+	/* box-shadow: 0 0 10px #abbfc0; */
+} 
+
+.start {
+	width: 100%;
+	background: #1e1e1e; 
+	color: white; 
+	border-radius: 7px; 
+	border: 0px; 
+	padding: 10px; 
+	font-size: 1.2em; 
+	box-shadow: 0 0 70px #abbfc0; 
+	font-family: "Courier New", Courier, monospace; 
+}
+
+.userName {
+	width: 100%;
+	margin-top: 15px;
+	background: #1e1e1e; 
+	color: white; 
+	border-radius: 7px; 
+	border: 0px; 
+	padding: 10px; 
+	font-size: 1.2em; 
+	box-shadow: 0 0 70px #abbfc0; 
+	font-family: "Courier New", Courier, monospace; 
+}
+
+.records-section {
+    margin: 20px auto;
+	width: 100%;
+    padding: 20px;
+    border-radius: 7px;
+    background-color: #1e1e1e;
+	color: white; 
+}
+
+.records-section h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: white; 
+}
+
+.records-section ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.records-section li {
+	text-align: center;
+    padding: 10px;
+    font-size: 18px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+}
+
+.records-section li:last-child {
+    border-bottom: none;
+}

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from 'axios';
 import Snake from "./Components/Snake";
 import Food from "./Components/Food";
 import Menu from "./Components/Menu";
@@ -27,83 +26,51 @@ const initialState = {
 	snakeDots: [
 		[0, 0],
 		[0, 2],
-	],
-	level: 0,
-	isPaused: false,
-	name: '',
-	records: [],
+  ],
+  level: 0,
+  isPaused: false,
 };
 
 class App extends Component {
 	constructor() {
 		super();
-		this.state = {
-            ...initialState,
-            name: '',
-            records: []
-        };
+		this.state = initialState;
 	}
 
 	componentDidMount() { 
-		this.fetchRecords();
-		this.snakeInterval = setInterval(this.moveSnake, this.state.speed); 
-		document.onkeydown = this.onKeyDown; 
-	} 
+    this.snakeInterval = setInterval(this.moveSnake, this.state.speed); 
+    document.onkeydown = this.onKeyDown; 
+  } 
 
 	componentDidUpdate() { 
 		this.onSnakeOutOfBounds(); 
 		this.onSnakeCollapsed(); 
 		this.onSnakeEats(); 
-	}
+	} 
 
-	fetchRecords = async () => {
-        try {
-            const response = await axios.get('http://localhost:3000/records');
-            this.setState({ records: response.data });
-        } catch (error) {
-            console.error("There was an error fetching the records!", error);
-        }
-    };
-
-	submitScore = async () => {
-        const { name, points } = this.state;
-        try {
-            await axios.post('http://localhost:3000/records', { name, score: points });
-            this.fetchRecords();
-        } catch (error) {
-            console.error("There was an error submitting the score!", error);
-        }
-    };
-
-	onKeyDown = (e) => {
-		const { route } = this.state;
-		if (route === "game") {
-			switch (e.keyCode) {
-				case 37:
-					e.preventDefault();
-					this.setState({ direction: "LEFT" });
-					break;
-				case 38:
-					e.preventDefault();
-					this.setState({ direction: "UP" });
-					break;
-				case 39:
-					e.preventDefault();
-					this.setState({ direction: "RIGHT" });
-					break;
-				case 40:
-					e.preventDefault();
-					this.setState({ direction: "DOWN" });
-					break;
-				case 32:
-					e.preventDefault();
-					this.togglePause();
-					break;
-				default:
-					break;
-			}
-		}
-	};
+	onKeyDown = (e) => { 
+		e.preventDefault(); 
+		e = e || window.event; 
+		switch (e.keyCode) { 
+      case 37: 
+				this.setState({ direction: "LEFT" }); 
+				break; 
+			case 38: 
+				this.setState({ direction: "UP" }); 
+				break; 
+			case 39: 
+				this.setState({ direction: "RIGHT" }); 
+				break; 
+			case 40: 
+				this.setState({ direction: "DOWN" }); 
+        break; 
+      case 32:
+        this.togglePause();
+        break;
+      default:
+        break;
+		} 
+	}; 
 
   moveSnake = () => { 
     if (this.state.isPaused) return;
@@ -111,7 +78,7 @@ class App extends Component {
 		let head = dots[dots.length - 1]; 
 		if (this.state.route === "game") { 
 			switch (this.state.direction) { 
-				case "RIGHT": 
+        case "RIGHT": 
 					head = [head[0] + 2, head[1]]; 
 					break; 
 				case "LEFT": 
@@ -122,9 +89,9 @@ class App extends Component {
 					break; 
 				case "UP": 
 					head = [head[0], head[1] - 2]; 
-					break; 
-				default:
-					break;
+          break; 
+        default:
+          break;
 			} 
 			dots.push(head); 
 			dots.shift(); 
@@ -205,17 +172,13 @@ class App extends Component {
 	};
 
 	gameOver() { 
-		alert(`GAME OVER, your score is ${this.state.points}`); 
-		clearInterval(this.snakeInterval);
-		this.submitScore();
-		this.setState(initialState, () => {
-			this.snakeInterval = setInterval(this.moveSnake, this.state.speed);
-		});
-  	}
+    alert(`GAME OVER, your score is ${this.state.snakeDots.length - 2}`); 
+    clearInterval(this.snakeInterval);
+    this.setState(initialState, () => {
+        this.snakeInterval = setInterval(this.moveSnake, this.state.speed);
+    });
+  }
 
-	handleNameChange = (e) => {
-        this.setState({ name: e.target.value });
-    };
 
 	onDown = () => { 
 		let dots = [...this.state.snakeDots]; 
@@ -269,52 +232,31 @@ class App extends Component {
 		}); 
 	}; 
 
-	render() {
-        const { route, snakeDots, food, speed, isPaused, points, level, name, records } = this.state;
-        return (
-            <div>
-                {route === "menu" ? (
-                    <div>
-						<div className="wrapper">
-                        <Menu onRouteChange={this.onRouteChange} />
-                        	<input className="userName" type="text" placeholder="Enter your name" value={name} onChange={this.handleNameChange} />
-							<div className="records-section">
-                            <h2>Top 10 Scores</h2>
-                            <ul>
-                                {records.map((record, index) => (
-                                    <li key={index}>{record.name}: {record.score}</li>
-                                ))}
-                            </ul>
-                        </div>
-						</div>
-                    </div>
-                ) : (
-                    <div>
-                        <div className="game-info">
-                            <div>Score: {points}</div>
-                            <div>Speed: {100 - speed}</div>
-                            <div>Level: {level}</div>
-							<button className="pause" onClick={this.togglePause}>{isPaused ? "Resume" : "Pause"}</button>
-                        </div>
-                        <div className="game-area">
-                            <Snake snakeDots={snakeDots} />
-                            <Food dot={food.position} type={food.type} />
-                        </div>
-                        <div className="wrapper">
-						<div className="records-section">
-                            <h2>Top 10 Scores</h2>
-                            <ul>
-                                {records.map((record, index) => (
-                                    <li key={index}>{record.name}: {record.score}</li>
-                                ))}
-                            </ul>
-                        </div>
-						</div>
-                    </div>
-                )}
+	render() { 
+		const { route, snakeDots, food, speed, isPaused, points, level } = this.state; 
+		return ( 
+			<div> 
+				{route === "menu" ? ( 
+					<div> 
+						<Menu onRouteChange={this.onRouteChange} /> 
+					</div> 
+				) : ( 
+          <div> 
+            <div className="game-info">
+              <div>Score: {points}</div>
+                <div>Speed: {100 - speed}</div>
+                <div>Level: { level }</div>
             </div>
-        );
-    }
-}
+						<div className="game-area"> 
+							<Snake snakeDots={snakeDots} /> 
+							<Food dot={food.position} type={food.type} /> 
+						</div> 
+						<button onClick={this.togglePause}>{isPaused ? "Resume" : "Pause"}</button>
+					</div> 
+				)} 
+			</div> 
+		); 
+	} 
+} 
 
-export default App;
+export default App; 

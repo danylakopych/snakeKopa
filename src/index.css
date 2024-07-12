@@ -1,13 +1,80 @@
+/* index.css */
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background-color: #9cffb1;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.game-area {
+  position: relative;
+  width: 600px;
+  height: 500px;
+  border: 2px solid #1e1e1e;
+  border-radius: 10px;
+  margin: 50px auto;
+  display: flex;
+  flex-wrap: wrap;
+  box-shadow: 0 0 10px #abbfc0;
+  background-color: #f0f0f0;
+}
+
+@media only screen and (max-width: 800px) {
+  .game-area {
+    position: relative;
+    width: 350px;
+    height: 300px;
+  }
+
+  .snake {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+.snake {
+  position: absolute;
+  width: 2%;
+  height: 2%;
+  background-color: #6d2c07;
+  border: 1px solid white;
+  z-index: 2;
+}
+
+.food {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background-color: white;
+  border-radius: 20px;
+  z-index: 1;
+}
+
+.game-info {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 10px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.game-info div {
+  width: 200px;
+  background: #1e1e1e; 
+  color: white; 
+  border-radius: 7px; 
+  border: 0px; 
+  padding: 10px; 
+  font-size: 1.2em; 
+  box-shadow: 0 0 70px #abbfc0; 
+  font-family: "Courier New", Courier, monospace; 
+}
+ 
+.pause {
+  width: 200px;
+  background: #1e1e1e; 
+  color: white; 
+  border-radius: 7px; 
+  border: 0px; 
+  padding: 10px; 
+  font-size: 1.2em; 
+  box-shadow: 0 0 70px #abbfc0; 
+  font-family: "Courier New", Courier, monospace; 
 }
